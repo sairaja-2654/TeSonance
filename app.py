@@ -3,7 +3,7 @@ import streamlit as st
 import pickle
 
 # Load the dataset
-df = pd.read_csv("D:\\miniproject\\final mini\\binary_with_artist.csv", low_memory=False)
+df = pd.read_csv("binary_with_artist.csv", low_memory=False)
 
 # Remove unnecessary spaces in column names
 df.columns = df.columns.str.strip()
