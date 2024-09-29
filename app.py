@@ -14,7 +14,7 @@ song_info = df[['name', 'mood', 'artist', 'year']]
 
 # Load the pre-trained Logistic Regression model from the .pkl file (Linux path)
 # Update this to the correct path in your Linux environment
-with open("/path/to/miniproject/final mini/logistic_model.pkl", 'rb') as file:
+with open("logistic_model.pkl", 'rb') as file:
     logistic_model = pickle.load(file)
 
 # Streamlit App
