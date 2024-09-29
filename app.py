@@ -12,8 +12,9 @@ df.columns = df.columns.str.strip()
 songs = df['name'].tolist()  # List of available songs
 song_info = df[['name', 'mood', 'artist', 'year']]
 
-# Load the pre-trained Logistic Regression model from the .pkl file
-with open("D:\\miniproject\\final mini\\logistic_model.pkl", 'rb') as file:
+# Load the pre-trained Logistic Regression model from the .pkl file (Linux path)
+# Update this to the correct path in your Linux environment
+with open("/path/to/miniproject/final mini/logistic_model.pkl", 'rb') as file:
     logistic_model = pickle.load(file)
 
 # Streamlit App
@@ -32,15 +33,19 @@ if st.button("Find Mood"):
         artist = song_details['artist'].values[0]
         year = song_details['year'].values[0]
 
-        # Extract features for prediction (use the same columns as when training)
-        song_features = df[df['name'] == selected_song].drop(['index', 'name', 'mood', 'year', 'artist', 'lyrics'], axis=1)
+        # Extract features for prediction (make sure to match the training features)
+        try:
+            # Drop only the columns that exist in the dataset
+            song_features = df[df['name'] == selected_song].drop(['name', 'mood', 'year', 'artist', 'lyrics'], axis=1, errors='ignore')
 
-        # Predict the mood using the logistic regression model
-        predicted_mood = logistic_model.predict(song_features)[0]
+            # Predict the mood using the logistic regression model
+            predicted_mood = logistic_model.predict(song_features)[0]
 
-        # Display the song details
-        st.subheader(f"Mood: {predicted_mood}")
-        st.write(f"Artist: {artist}")
-        st.write(f"Year: {year}")
+            # Display the song details
+            st.subheader(f"Mood: {predicted_mood}")
+            st.write(f"Artist: {artist}")
+            st.write(f"Year: {year}")
+        except Exception as e:
+            st.error(f"Error processing song features: {e}")
     else:
         st.error("Song not found")
